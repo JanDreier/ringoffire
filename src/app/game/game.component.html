@@ -1,6 +1,6 @@
 <app-player [playerActive]="i == game.currentPlayer" *ngFor="let player of game.players; let i = index;" [ngStyle]="{'top.px': 80 + (i * 85)}" [name]="player" class="player-position"></app-player>
 
-<div class="field">
+<div class="field" style="background-image: url('assets/img/board.jpg');">
 
 
 
@@ -8,12 +8,12 @@
 
     <div class="card-stack">
         <!-- Card Stack-->
-        <img [ngStyle]="{'right.px': i * 5}" *ngFor="let card of [1,2,3,4,5]; let i =index;" src="/assets/img/cards/card_cover.png">
-        <img (click)="takeCard()" class="top-card" style="right: 25px" src="/assets/img/cards/card_cover.png">
+        <img [ngStyle]="{'right.px': i * 5}" *ngFor="let card of [1,2,3,4,5]; let i =index;" src="assets/img/cards/card_cover.png">
+        <img (click)="takeCard()" class="top-card" style="right: 25px" src="assets/img/cards/card_cover.png">
         <!-- Stack for played cards-->
-        <img *ngFor="let cards of game.playedCard" class="played-card" src="/assets/img/cards/{{ cards }}.png">
+        <img *ngFor="let cards of game.playedCard" class="played-card" src="assets/img/cards/{{ cards }}.png">
         <!-- Current card (Animation)-->
-        <img *ngIf="pickCardAnimation" class="pick-card" style="right: 25px" src="/assets/img/cards/{{ currentCard }}.png">
+        <img *ngIf="pickCardAnimation" class="pick-card" style="right: 25px" src="assets/img/cards/{{ currentCard }}.png">
     </div>
 </div>
 
