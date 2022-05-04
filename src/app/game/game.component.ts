@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Game } from 'src/models/game';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
@@ -33,7 +33,8 @@ export class GameComponent implements OnInit {
       console.log(this.currentCard);
       this.pickCardAnimation = true;
 
-
+      this.game.currentPlayer++;
+      this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
       setTimeout(()=>{
         this.game.playedCard.push(this.currentCard);
         this.pickCardAnimation = false;
@@ -46,8 +47,11 @@ export class GameComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogAddPlayerComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+    dialogRef.afterClosed().subscribe(name => {
+      if(name && name.length > 0){
+      this.game.players.push(name);
+      }
     });
   }
+
 }

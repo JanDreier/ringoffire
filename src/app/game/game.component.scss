@@ -52,6 +52,7 @@
 .player-position {
     position: absolute;
     right: 0;
+    overflow: hidden;
 }
 
 .btn-add {
@@ -60,6 +61,9 @@
     right: 52px;
 }
 
-.purple-btn {
-    background-color: rgb(77, 66, 228)
+.pin-bottom {
+    position: absolute;
+    bottom: 52px;
+    left: 100px;
+    right: 120px;
 }
