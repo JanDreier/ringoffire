@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Game } from 'src/models/game';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -10,34 +12,46 @@ import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-  pickCardAnimation = false;
-  currentCard: string = '';
   game: Game;
+  gameId: string;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(private route:ActivatedRoute, private firestore: AngularFirestore, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.newGame();
+    this.route.params.subscribe( (params) => {
+      console.log('params are: ', params['id']);
+      this.gameId = params['id'];
+      this.firestore.collection('games').doc(this.gameId).valueChanges().subscribe((game: any) => {
+        console.log('Game update: ', game);
+        this.game.currentPlayer = game.currentPlayer;
+        this.game.playedCard = game.playedCard;
+        this.game.stack = game.stack;
+        this.game.players = game.players;
+        this.game.currentCard = game.currentCard;
+        this.game.pickCardAnimation = game.pickCardAnimation;
+      });
+    });
+
   }
 
   newGame(){
     this.game = new Game();
-    console.log(this.game);
-
   }
 
   takeCard(){
 
-    if (!this.pickCardAnimation){
-      this.currentCard = this.game.stack.pop();
-      console.log(this.currentCard);
-      this.pickCardAnimation = true;
-
+    if (!this.game.pickCardAnimation){
+      this.game.currentCard = this.game.stack.pop();
+      console.log(this.game.currentCard);
+      this.game.pickCardAnimation = true;
       this.game.currentPlayer++;
       this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+      this.saveGame();
       setTimeout(()=>{
-        this.game.playedCard.push(this.currentCard);
-        this.pickCardAnimation = false;
+        this.game.playedCard.push(this.game.currentCard);
+        this.game.pickCardAnimation = false;
+        this.saveGame();
       }, 1000)
     }
 
@@ -50,8 +64,13 @@ export class GameComponent implements OnInit {
     dialogRef.afterClosed().subscribe(name => {
       if(name && name.length > 0){
       this.game.players.push(name);
+      this.saveGame();
       }
     });
+  }
+
+  saveGame(){
+    this.firestore.collection('games').doc(this.gameId).update(this.game.toJson());
   }
 
 }

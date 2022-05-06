@@ -16,6 +16,13 @@ import {MatInputModule} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
 import { GameInfoComponent } from './game-info/game-info.component';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { provideDatabase,getDatabase } from '@angular/fire/database';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire/compat';
+
 
 
 
@@ -29,6 +36,7 @@ import { GameInfoComponent } from './game-info/game-info.component';
     GameInfoComponent
   ],
   imports: [
+    AngularFireModule.initializeApp(environment.firebase),
     MatCardModule,
     MatDialogModule,
     MatRippleModule,
@@ -38,7 +46,11 @@ import { GameInfoComponent } from './game-info/game-info.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    MatInputModule
+    MatInputModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideDatabase(() => getDatabase()),
+    provideFirestore(() => getFirestore())
   ],
   providers: [],
   bootstrap: [AppComponent]
