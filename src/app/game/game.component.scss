@@ -13,7 +13,7 @@
         position: absolute;
         width: 180px;
         @media (max-width: 600px) {
-            width: 120px;
+            width: 110px;
         }
     }
 }
@@ -31,7 +31,7 @@
     transform: scale(1.1) translateX(220px) translateY(-240px) rotate(-10deg);
     @media (max-width: 600px) {
         right: 25px;
-        transform: scale(1.1) translateX(180px) translateY(-180px) rotate(-10deg);
+        transform: scale(1.1) translateX(170px) translateY(-170px) rotate(-10deg);
     }
 }
 
@@ -40,7 +40,7 @@
     transform: scale(1.1) translateX(220px) translateY(-240px) rotate(-10deg);
     @media (max-width: 600px) {
         animation: pick-card-animation-mobile 1s ease-in-out;
-        transform: scale(1.1) translateX(180px) translateY(-180px) rotate(-10deg);
+        transform: scale(1.1) translateX(170px) translateY(-170px) rotate(-10deg);
     }
 }
 
@@ -55,7 +55,7 @@
         transform: scale(1.4);
     }
     100% {
-        transform: scale(1.1) translateX(180px) translateY(-180px) rotate(-10deg);
+        transform: scale(1.1) translateX(170px) translateY(-170px) rotate(-10deg);
     }
 }
 
@@ -131,4 +131,11 @@ app-player-mobile {
     img {
         width: 400px;
     }
+}
+
+.preloadImage {
+    height: 5px;
+    width: 5px;
+    opacity: 0;
+    z-index: -99999999;
 }

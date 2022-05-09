@@ -11,6 +11,7 @@
 
 
 <div *ngIf="!gameOver" class="field" style="background-image: url('assets/img/board.jpg');">
+    <img class="preloadImage" src="assets/img/cards/{{ game.stack[game.stack.length -1] }}.png">
 
 
     <div class="card-stack">
